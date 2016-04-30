@@ -16,12 +16,14 @@ class CreateUsersTable extends Migration
       
             $table->increments('id');
             $table->string('fname', 30);
-            $table->string('mname', 20);
+            $table->string('mname', 20)->nullable();
             $table->string('lname', 20);
             $table->string('email', 45)->unique();
             $table->date('birthday');
-            $table->boolean('sex');
-            $table->string('address', 50);
+            $table->boolean('sex'); // Male: sex = true
+                                    // Female: sex = false
+                                    // Other: sex = null
+            $table->string('address', 60);
             $table->string('phone', 12);
             $table->integer('type');
             $table->string('password');
