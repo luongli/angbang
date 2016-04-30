@@ -13,16 +13,15 @@ class Children extends Model
      * @var array
      */
     protected $fillable = [
-        'fullname', 'email', 'password', 'birthday', 'sex', 'address', 'phone', 'type'
+        'fname', 'mname', 'lname', 'birthday', 'sex', 'address', 'mood', 'health', 'temperature', 'sleep', 'food'
     ];
-
-    protected $dates = ['deleted_at', 'last_login'];
+    
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'secret_token',
     ];
 }
