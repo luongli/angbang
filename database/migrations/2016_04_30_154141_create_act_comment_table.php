@@ -15,7 +15,7 @@ class CreateActCommentTable extends Migration
         Schema::create('act_comment', function (Blueprint $table) {
             $table->increments('id');
             $table->string('content', 200);
-            $table->time('time');
+            $table->dateTime('time');
             $table->timestamps();
         });
     }
