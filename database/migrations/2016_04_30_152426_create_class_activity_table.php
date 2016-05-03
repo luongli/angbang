@@ -17,6 +17,13 @@ class CreateClassActivityTable extends Migration
             $table->date('act_date');
             $table->timestamps();
         });
+
+        /* add foreign key for class_activity table */
+        Schema::table('class_activity', function ($table) {
+            /* id_class colume references id of user table */
+            $table->integer('id_class')->unsigned();
+            $table->foreign('id_class')->references('id')->on('class')->onDelete('cascade')->onUpdate('cascade');
+        });
     }
 
     /**
