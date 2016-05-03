@@ -27,8 +27,9 @@ class CreateUsersTable extends Migration
             $table->string('phone', 12);
             $table->integer('type');
             $table->string('password');
-            $table->rememberToken();
-            $table->dateTime('last_login');
+            $table->string('remember_token')->nullable();
+            $table->string('avatar')->nullable( );
+            $table->dateTime('last_login')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
