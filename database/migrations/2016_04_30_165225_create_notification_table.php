@@ -21,7 +21,7 @@ class CreateNotificationTable extends Migration
         });
 
         /* add foreign keys */
-        Schema::table('children_parents', function ($table) {
+        Schema::table('notification', function ($table) {
             // sender foreign key
             $table->integer('sender')->unsigned();
             $table->foreign('sender')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
