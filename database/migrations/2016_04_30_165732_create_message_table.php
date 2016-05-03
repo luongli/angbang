@@ -17,6 +17,16 @@ class CreateMessageTable extends Migration
             $table->string('content', 200);
             $table->timestamps();
         });
+
+        /* add foreign keys */
+        Schema::table('message', function ($table) {
+            // id_user1 foreign key
+            $table->integer('id_user1')->unsigned();
+            $table->foreign('id_user1')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            // id_user2 foreign key
+            $table->integer('id_user2')->unsigned();
+            $table->foreign('id_user2')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+        });
     }
 
     /**
