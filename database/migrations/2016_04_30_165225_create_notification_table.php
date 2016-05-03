@@ -19,6 +19,16 @@ class CreateNotificationTable extends Migration
             $table->integer('id_action');
             $table->timestamps();
         });
+
+        /* add foreign keys */
+        Schema::table('children_parents', function ($table) {
+            // sender foreign key
+            $table->integer('sender')->unsigned();
+            $table->foreign('sender')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            // receiver foreign key
+            $table->integer('receiver')->unsigned();
+            $table->foreign('receiver')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+        });
     }
 
     /**
