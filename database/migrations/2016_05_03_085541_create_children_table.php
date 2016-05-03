@@ -29,6 +29,13 @@ class CreateChildrenTable extends Migration
             $table->time('sleep');
             $table->string('food', 40);
         });
+
+        /* add foreign key for children table */
+        Schema::table('children', function ($table) {
+            /* id_class colume references id of class table */
+            $table->integer('id_class')->unsigned();
+            $table->foreign('id_class')->references('id')->on('class')->onDelete('cascade')->onUpdate('cascade');
+        });
     }
 
     /**
