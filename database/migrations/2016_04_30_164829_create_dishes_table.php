@@ -17,6 +17,13 @@ class CreateDishesTable extends Migration
             $table->string('dish', 30);
             $table->timestamps();
         });
+
+        /* add foreign key for dishes table */
+        Schema::table('dishes', function ($table) {
+            /* id_menu colume references id of menu table */
+            $table->integer('id_menu')->unsigned();
+            $table->foreign('id_menu')->references('id')->on('menu')->onDelete('cascade')->onUpdate('cascade');
+        });
     }
 
     /**

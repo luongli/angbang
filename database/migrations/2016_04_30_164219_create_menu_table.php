@@ -17,6 +17,13 @@ class CreateMenuTable extends Migration
             
             $table->timestamps();
         });
+
+        /* add foreign key for menu table */
+        Schema::table('menu', function ($table) {
+            /* id_class colume references id of class table */
+            $table->integer('id_class')->unsigned();
+            $table->foreign('id_class')->references('id')->on('class')->onDelete('cascade')->onUpdate('cascade');
+        });
     }
 
     /**

@@ -18,6 +18,13 @@ class CreatePostTable extends Migration
             $table->dateTime('post_time');
             $table->timestamps();
         });
+
+        /* add foreign key for act_comment table */
+        Schema::table('post', function ($table) {
+            /* id_user references id of user table */
+            $table->integer('id_user')->unsigned();
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+        });
     }
 
     /**

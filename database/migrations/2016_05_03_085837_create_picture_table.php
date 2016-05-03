@@ -18,6 +18,16 @@ class CreatePictureTable extends Migration
             $table->dateTime('uploaded_time');
             $table->timestamps();
         });
+
+        /* add foreign key for picture table */
+        Schema::table('picture', function ($table) {
+            /* id_class colume references id of class table */
+            $table->integer('id_class')->unsigned();
+            $table->foreign('id_class')->references('id')->on('class')->onDelete('cascade')->onUpdate('cascade');
+            /* id_post references id of post table */
+            $table->integer('id_post')->unsigned()->nullable();
+            $table->foreign('id_post')->references('id')->on('post')->onDelete('cascade')->onUpdate('cascade');
+        });
     }
 
     /**
