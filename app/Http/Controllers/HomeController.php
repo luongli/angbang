@@ -37,8 +37,9 @@ class HomeController extends Controller
      */
     public function get_avatar($user_id)
     {
-        //print_r($user_id);
+        // the path should be changed depending on the OS
         $path = 'C:/Users/li/Documents/workspace/angbang/storage/avatar/' . $user_id . '/a.jpg';
+        // check if the file exists
         if(File::exists($path)) {
             $image = Image::make($path)->resize(300, 300);
             return $image->response('jpg');
