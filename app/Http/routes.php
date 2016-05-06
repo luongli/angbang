@@ -26,4 +26,6 @@ Route::get('/register', function () {
 	return View::make('auth.register');
 });
 
+Route::get('/v1/getavatar/{user_id}', 'HomeController@get_avatar');
+
 Route::post('/register', 'PublicController@register');
