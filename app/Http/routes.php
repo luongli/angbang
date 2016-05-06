@@ -27,5 +27,3 @@ Route::get('/register', function () {
 });
 
 Route::post('/register', 'PublicController@register');
-
-Route::resource('sessions', 'SessionsController');
