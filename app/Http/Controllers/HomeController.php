@@ -31,7 +31,9 @@ class HomeController extends Controller
     }
 
     /**
-     * Get avatar of a specific user
+     * Get avatar of a specific user.
+     * Avatar images will be stored on storage/avatar/{user_id} folder
+     * 
      * @param user_id
      * @return image
      */
