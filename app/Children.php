@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Children extends Model
 {
-    protected $table = 'childrens';
+    protected $table = 'children';
     /**
      * The attributes that are mass assignable.
      *
@@ -24,4 +24,12 @@ class Children extends Model
     protected $hidden = [
         'password', 'secret_token',
     ];
+
+    /**
+     * Get the class that the child enrolls in
+     */
+    public function get_class()
+    {
+        return $this->belongsTo('App\Class', 'id_class');
+    }
 }

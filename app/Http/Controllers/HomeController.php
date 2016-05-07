@@ -49,4 +49,20 @@ class HomeController extends Controller
         
         return 'Requested file does not exist';
     }
+
+    /**
+     * This function returns a list of students in a given class
+     *
+     * @param class_id
+     * @return json contains an array of id and name of students in that class
+     */
+    public function get_class_list($class_id)
+    {
+        $children = \App\Classes::find($class_id)->children;
+        //print_r($class);
+        
+        foreach( $children as $child) {
+            echo $child;
+        }
+    }
 }
