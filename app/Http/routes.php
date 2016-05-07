@@ -14,18 +14,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/v1/user/{id}', function ($id) {
-	$user = App\User::find($id);
-	return $user->toJson();
-});
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
 
-Route::get('/register', function () {
-	return View::make('auth.register');
-});
-
 Route::get('/v1/getavatar/{user_id}', 'HomeController@get_avatar');
+
+Route::get('/register', 'PublicController@get_register');
 
 Route::post('/register', 'PublicController@register');

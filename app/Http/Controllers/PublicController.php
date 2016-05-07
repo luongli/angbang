@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Input;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Hash;
+use View;
 
 class PublicController extends Controller {
 	/**
@@ -27,5 +28,14 @@ class PublicController extends Controller {
 			'password' => Hash::make($input['password']),
 		]);
 		print_r($user1);
+	}
+
+	/**
+	 * Response to register of GET method
+	 *
+	 * @return response
+	 */
+	public function get_register() {
+		return View::make('auth.register');
 	}
 }
