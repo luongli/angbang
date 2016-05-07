@@ -7,4 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class TeacherClass extends Model
 {
     protected $table = 'teacher_class';
+
+    protected $fillable = ['id_teacher', 'id_class'];
 }
