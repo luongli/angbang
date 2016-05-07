@@ -22,7 +22,7 @@ class CreateChildrenTable extends Migration
                                     // Female: sex = false
                                     // Other: sex = null
             $table->string('address', 60);
-            $table->string('secret_token', 100);
+            $table->string('secret_token', 100)->unique();
             $table->string('mood', 20);
             $table->string('health', 30);
             $table->float('temperature');
