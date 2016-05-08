@@ -30,6 +30,6 @@ class Children extends Model
      */
     public function get_class()
     {
-        return $this->belongsTo('App\Class', 'id_class');
+        return $this->belongsTo('App\Classes', 'id_class');
     }
 }

@@ -23,4 +23,12 @@ class Classes extends Model
     {
     	return $this->hasMany('App\Children', 'id_class');
     }
+
+    /**
+     * Teachers who are working on a class
+     */
+    public function teachers()
+    {
+        return $this->belongsToMany('App\User', 'teacher_class', 'id_class', 'id_teacher');
+    }
 }

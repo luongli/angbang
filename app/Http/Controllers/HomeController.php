@@ -6,6 +6,8 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Database\DatabaseManager;
 use File;
 
 class HomeController extends Controller
@@ -60,9 +62,39 @@ class HomeController extends Controller
     {
         $children = \App\Classes::find($class_id)->children;
         //print_r($class);
-        
+        $res = array();
+        //array_push($res, count($children));
         foreach( $children as $child) {
-            echo $child;
+            $tmp = array( 'id'=>$child['id'], 'fname'=>$child['fname'], 'lname'=>$child['lname']);
+            array_push($res, $tmp);
+        }
+
+        return Response::json($res);
+    }
+
+    /**
+     * This function return a list of class that a teacher is teaching in
+     * @param id of teacher
+     * @return json array of class id and class name
+     */
+    public function get_classes_of_teacher($teacher_id)
+    {
+        $teacher = \App\User::find($teacher_id);
+        //check if user is a teacher
+        if($teacher['type'] == 2){
+            $classes = \App\User::find($teacher_id)->classes;
+            //echo $classes;
+            $res = array();
+            foreach($classes as $class){
+                $tmp = array(
+                    'id'=>$class['id'],
+                    'class_name'=>$class['class_name']
+                );
+                array_push($res, $tmp);
+            }
+            return Response::json($res);
+        }else{
+            echo 'not a teacher';
         }
     }
 }
