@@ -28,6 +28,8 @@ Route::get('/v1/get/teachers_of_class/{class_id}', 'HomeController@get_teachers_
 
 Route::get('/v1/get/parents_of_child/{child_id}', 'HomeController@get_parents_of_child');
 
+Route::get('/v1/get/children_of_parent/{parent_id}', 'HomeController@get_children_of_parent');
+
 Route::get('/v1/get/user_info/{user_id}', 'HomeController@get_user_info');
 
 Route::get('/v1/get/class_info/{class_id}', 'HomeController@get_class_info');

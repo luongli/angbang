@@ -192,5 +192,33 @@ class HomeController extends Controller
         }
         return Response::json($res);
     }
+
+    /**
+     * get_children_of_parent returns a list of children of a given parent
+     * 
+     * @param parent_id
+     * @return an json array of children including: id, fname, mname, lname
+     */
+    public function get_children_of_parent($parent_id)
+
+    {
+        $parent = \App\User::find($parent_id);
+        $res = array();
+
+        // need to check for parent
+        if(!is_null($parent)){
+            $children = $parent->children;
+            foreach($children as $child){
+                $tmp = array(
+                    'id'=>$child['id'],
+                    'fname'=>$child['fname'],
+                    'mname'=>$child['mname'],
+                    'lname'=>$child['lname']
+                );
+                array_push($res, $tmp);
+            }
+        }
+        return Response::json($res);
+    }
 }
 
