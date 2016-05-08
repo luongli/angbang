@@ -120,5 +120,37 @@ class HomeController extends Controller
         }
         return Response::json($res);
     }
+
+    /**
+     * get_user_info function is used to get details of a specific user
+     * 
+     * @param user_id
+     * @return a json: id, fname, mname, lname, birthday, sex, address, phone, type, avatar
+     */
+     public function get_user_info($user_id)
+     {
+        $user = \App\User::find($user_id);
+        if(!is_null($user)){
+            echo $user;
+        }else{
+            echo "null";
+        }
+     }
+
+     /**
+     * get_class_info function is used to get details of a specific class
+     * 
+     * @param class_id
+     * @return a json: id, class_name, course, num_of_student
+     */
+    public function get_class_info($class_id)
+    {
+        $class = \App\Classes::find($class_id);
+        if(!is_null($class)){
+            echo $class;
+        }else{
+            echo "null";
+        }
+    }
 }
 
