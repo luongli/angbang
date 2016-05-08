@@ -168,5 +168,29 @@ class HomeController extends Controller
             echo "null";
         }
     }
+
+    /**
+     * get_parents_of_child returns a list of parents of a given child
+     * 
+     * @param child_id
+     * @return an array of parents including: id, fname, mname, lname
+     */
+    public function get_parents_of_child($child_id)
+    {
+        $parents = \App\Children::find($child_id)->parents;
+        $res = array();
+        if(!is_null($parents)){
+            foreach($parents as $parent){
+                $tmp = array(
+                    'id'=>$parent['id'],
+                    'fname'=>$parent['fname'],
+                    'mname'=>$parent['mname'],
+                    'lname'=>$parent['lname']
+                );
+                array_push($res, $tmp);
+            }
+        }
+        return Response::json($res);
+    }
 }
 
