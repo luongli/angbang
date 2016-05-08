@@ -34,6 +34,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Classes', 'teacher_class', 'id_teacher', 'id_class');
     }
+
+    /**
+     * A parent may have more than one child
+     */
+    public function children()
+    {
+        return $this->belongsToMany('App\Children', 'children_parents', 'id_parent', 'id_child');
+    }
 }
 
 
