@@ -131,7 +131,7 @@ class HomeController extends Controller
      {
         $user = \App\User::find($user_id);
         if(!is_null($user)){
-            echo $user;
+            return $user->toJson();
         }else{
             echo "null";
         }
@@ -147,7 +147,23 @@ class HomeController extends Controller
     {
         $class = \App\Classes::find($class_id);
         if(!is_null($class)){
-            echo $class;
+            return $class->toJson();
+        }else{
+            echo "null";
+        }
+    }
+
+    /**
+     * get_child_info function is used to get details of a specific child
+     * 
+     * @param child_id
+     * @return a json: id, fname, mname, lname, birthday, sex, address, mood, health, temperature, sleep, food, id_class
+     */
+    public function get_child_info($child_id)
+    {
+        $child = \App\Children::find($child_id);
+        if(!is_null($child)){
+            return $child->toJson();
         }else{
             echo "null";
         }
