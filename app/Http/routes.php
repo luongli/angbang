@@ -24,6 +24,8 @@ Route::get('/v1/get/class_list/{class_id}', 'HomeController@get_class_list');
 
 Route::get('/v1/get/classes_of_teacher/{teacher_id}', 'HomeController@get_classes_of_teacher');
 
+Route::get('/v1/get/teachers_of_class/{class_id}', 'HomeController@get_teachers_of_class');
+
 Route::get('/register', 'PublicController@get_register');
 
 Route::post('/register', 'PublicController@register');

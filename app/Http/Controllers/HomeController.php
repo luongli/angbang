@@ -97,4 +97,28 @@ class HomeController extends Controller
             echo 'not a teacher';
         }
     }
+
+    /**
+     * This function return a list of teachers who is working on a given class
+     * @param id of a class
+     * @return json array of teacher id, fname, mname, lname
+     */
+    public function get_teachers_of_class($class_id)
+    {
+        $teachers = \App\Classes::find($class_id)->teachers;
+        $res = array();
+        if(!is_null($teachers)){
+            foreach($teachers as $teacher){
+                $tmp = array(
+                    'id'=>$teacher['id'],
+                    'fname'=>$teacher['fname'],
+                    'mname'=>$teacher['mname'],
+                    'lname'=>$teacher['lname']
+                );
+                array_push($res, $tmp);
+            }
+        }
+        return Response::json($res);
+    }
 }
+
