@@ -40,6 +40,8 @@ Route::get('/register', 'PublicController@get_register');
 
 Route::post('/register', 'PublicController@register');
 
+Route::get('/test', 'PublicController@test');
+
 Event::listen('illuminate.query', function($query){
     var_dump($query);
 });

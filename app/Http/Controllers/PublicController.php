@@ -38,4 +38,12 @@ class PublicController extends Controller {
 	public function get_register() {
 		return View::make('auth.register');
 	}
+
+	/**
+	 * This route is used to test connection
+	 * return a string
+	 */
+	public function test(){
+		echo "OK. Connected to server successfully";
+	}
 }
