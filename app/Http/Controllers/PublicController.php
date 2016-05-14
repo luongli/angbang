@@ -24,7 +24,7 @@ class PublicController extends Controller {
 			'sex' => true,
 			'address' => 'Hanoi, Vietnam',
 			'phone' => '0964756453',
-			'type' => 2,
+			'type' => 1,
 			'password' => Hash::make($input['password']),
 		]);
 		print_r($user1);
