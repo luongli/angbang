@@ -40,4 +40,13 @@ class Children extends Model
     {
         return $this->belongsToMany('App\User', 'children_parents', 'id_child', 'id_parent');
     }
+
+    /**
+     * A child may have more than 1 parent
+     * return only id of parents
+     */
+    public function id_parents()
+    {
+        return $this->belongsToMany('App\User', 'children_parents', 'id_child', 'id_parent')->select('id');
+    }
 }

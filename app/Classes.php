@@ -31,4 +31,13 @@ class Classes extends Model
     {
         return $this->belongsToMany('App\User', 'teacher_class', 'id_class', 'id_teacher');
     }
+
+
+    /**
+     * get id of teachers who are working on a class
+     */
+    public function id_teachers()
+    {
+        return $this->belongsToMany('App\User', 'teacher_class', 'id_class', 'id_teacher')->select('id');
+    }
 }

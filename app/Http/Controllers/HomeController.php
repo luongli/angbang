@@ -228,5 +228,112 @@ class HomeController extends Controller
     public function login(){
         echo 1;
     }
+
+    /**
+     * get relevant people of a user who is parent
+     * @param user
+     * @return an array
+     */
+    public function get_relevant_of_parent($user)
+    {
+        $children = $user->children;
+        $classes = array();
+        //$teachers = null;
+        $users = array();
+        foreach($children as $child) {
+            /* get the list of class ids that
+            the children of a parent is participating in
+            */
+            $classes[(string)$child['id_class']] = \App\Classes::find($child['id_class']);
+        }
+        foreach($classes as $class_id => $class){
+            $id_teachers = $class->id_teachers;
+            foreach ($id_teachers as $id) {
+                /*
+                Get the ids of teachers who are teaching that class
+                */
+                if($id['id'] != $user['id'])
+                    // only push person who is not requesting this api
+                    array_push($users, $id['id']);
+            }
+            //array_merge($users, $id_teachers);
+            //$id_parents = $class->children->id_parents;
+            foreach($class->children as $child){
+                // get the list of parents of a child
+                $id_parents = $child->id_parents;
+                foreach($id_parents as $id){
+                    if($id['id'] != $user['id'])
+                        // only push person who is not requesting this api
+                        array_push($users, $id['id']);
+                }
+            }
+            //remove duplicated element
+            $users = array_unique($users);
+        }
+        return $users;
+    }
+
+    /**
+     * get all people who are working in the same class or
+     * are parents of children in that class
+     * @param user_id
+     * @return an array
+     */
+    public function get_relevant_of_teacher($user)
+    {
+        // find the classes the teacher is working on
+        $classes = $user->classes;
+        $users = array();
+
+        foreach($classes as $class){
+            // get the list of teachers of a class
+            $teachers = $class->teachers;
+            // add teachers id to array
+            foreach($teachers as $teacher){
+                if($teacher['id'] != $user['id'])
+                    // make sure that the id of requesting user is not added to array
+                    array_push($users, $teacher['id']);
+            }
+
+            // get the list of parents in a class
+            foreach($class->children as $child){
+                // get the list of parents of a child
+                foreach($child->parents as $parent){
+                    if($parent['id'] != $user['id'])
+                        // make sure that the id of requesting user is not added to array
+                        array_push($users, $parent['id']);
+                }
+            }
+        }
+
+        $users = array_unique($users);
+        return $users;
+    }
+
+    /**
+     * return an array of ids of people (except the requesting person) who are in the same class
+     * @param user_id
+     * @return json
+     */
+    public function get_relevant_people($user_id)
+    {
+        $user = \App\User::find($user_id);
+        if(!is_null($user)){
+            // if user is found
+            if($user['type'] == 1){
+                // if user is parent
+                return Response::json($this->get_relevant_of_parent($user));
+                //return $this->test($user);
+            } else {
+                // else user is teacher
+                return Response::json($this->get_relevant_of_teacher($user));
+                //return $this->test($user);
+            }
+        } else {
+            // if user not found, reponse an empty json
+            return Response::json(array());
+        }
+    }
+
 }
 
