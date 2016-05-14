@@ -19,7 +19,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth.basic');
     }
 
     /**
@@ -219,6 +219,14 @@ class HomeController extends Controller
             }
         }
         return Response::json($res);
+    }
+
+    /**
+     * check if the authentication is successful
+     * @return a string ok if success
+     */
+    public function login(){
+        echo 1;
     }
 }
 

@@ -36,6 +36,8 @@ Route::get('/v1/get/class_info/{class_id}', 'HomeController@get_class_info');
 
 Route::get('/v1/get/child_info/{child_id}', 'HomeController@get_child_info');
 
+Route::get('/v1/login', 'HomeController@login');
+
 Route::get('/register', 'PublicController@get_register');
 
 Route::post('/register', 'PublicController@register');
