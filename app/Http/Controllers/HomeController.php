@@ -66,18 +66,17 @@ class HomeController extends Controller
         */
         //Log::info(Input)
         //print_r(Input::file('image'));
-        //$file = Input::file('image');
-        //$name = Input::get('name');
-        return "OK";
-        /*
+        $file = Input::file('image');
+        $name = Input::get('name');
+        
         echo $name;
-        $file = base64_decode($encoded_image);
-        */
+        //$file = base64_decode($encoded_image);
+        
         /*
         $post->longitude=Input::get('long');
         $post->latitude=Input::get('lat');          
         */
-        /*
+        
         $destinationPath = public_path().'/images/';
         $filename        = str_random(6) . '_' . $file->getClientOriginalName();
         $file->move($destinationPath, $filename);
