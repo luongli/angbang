@@ -46,6 +46,12 @@ Route::post('/register', 'PublicController@register');
 
 Route::get('/test', 'PublicController@test');
 
+Route::post('images/store','HomeController@storeImage');
+
+Route::get('/upload', function() {
+	return view('upload');
+});
+
 Event::listen('illuminate.query', function($query){
     var_dump($query);
 });

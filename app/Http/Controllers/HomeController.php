@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Database\DatabaseManager;
 use File;
+use Log;
 
 class HomeController extends Controller
 {
@@ -51,6 +52,40 @@ class HomeController extends Controller
         
         return 'Requested file does not exist';
     }
+
+    /**
+     * handle picture upload from client
+     */
+     public function storeImage()
+     {
+
+        /*
+        $id = Input::get('id');
+        $post->category_for= Input::get('username');
+        $post->title= Input::get('status');
+        */
+        //Log::info(Input)
+        //print_r(Input::file('image'));
+        //$file = Input::file('image');
+        //$name = Input::get('name');
+        return "OK";
+        /*
+        echo $name;
+        $file = base64_decode($encoded_image);
+        */
+        /*
+        $post->longitude=Input::get('long');
+        $post->latitude=Input::get('lat');          
+        */
+        /*
+        $destinationPath = public_path().'/images/';
+        $filename        = str_random(6) . '_' . $file->getClientOriginalName();
+        $file->move($destinationPath, $filename);
+        /*
+        $post->image = '/images/'. $filename;
+        $post->save();
+        */
+     }
 
     /**
      * This function returns a list of students in a given class
