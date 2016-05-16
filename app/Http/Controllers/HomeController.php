@@ -20,7 +20,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth.basic');
+        //$this->middleware('auth.basic');
     }
 
     /**
@@ -54,6 +54,25 @@ class HomeController extends Controller
     }
 
     /**
+     * Get avatar picture of a child
+     * 
+     * @param child_id
+     * @return image
+     */
+    public function get_child_picture($child_id)
+    {
+        // the image will be store at storage/child_avatar/{child_id}.jpg
+        $path = 'C:/Users/li/Documents/workspace/angbang/storage/child_avatar/' . $child_id . '.jpg';
+
+        if(File::exists($path)) {
+            $image = Image::make($path);
+            return $image->response('jpg');
+        }
+
+        return 'Requested file does not exist';
+    }
+
+    /**
      * handle picture upload from client
      */
      public function storeImage()
@@ -66,6 +85,7 @@ class HomeController extends Controller
         */
         //Log::info(Input)
         //print_r(Input::file('image'));
+        return "OK";
         $file = Input::file('image');
         $name = Input::get('name');
         

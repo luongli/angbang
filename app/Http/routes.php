@@ -20,6 +20,8 @@ Route::get('/home', 'HomeController@index');
 
 Route::get('/v1/getavatar/{user_id}', 'HomeController@get_avatar');
 
+Route::get('/v1/get/child_picture/{child_id}', 'HomeController@get_child_picture');
+
 Route::get('/v1/get/class_list/{class_id}', 'HomeController@get_class_list');
 
 Route::get('/v1/get/classes_of_teacher/{teacher_id}', 'HomeController@get_classes_of_teacher');
