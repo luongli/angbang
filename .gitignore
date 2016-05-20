@@ -6,3 +6,5 @@ Homestead.json
 .env
 # temporary files of powerarchitect
 *~
+# auto generated composer lock file
+composer.lock
