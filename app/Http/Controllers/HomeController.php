@@ -85,8 +85,11 @@ class HomeController extends Controller
         */
         //Log::info(Input)
         //print_r(Input::file('image'));
-        return "OK";
-        $file = Input::file('image');
+        //$encoded_image = Input::get('image');
+        //$file = Input::file('image');
+        $encoded_image = $_POST['image'];
+        $file = base64_decode($encoded_image);
+        file_put_contents('C:\Users\li\Documents\workspace\angbang\public\images\abc.jpg', $file);
         $name = Input::get('name');
         
         echo $name;
@@ -96,10 +99,11 @@ class HomeController extends Controller
         $post->longitude=Input::get('long');
         $post->latitude=Input::get('lat');          
         */
-        
+        /*
         $destinationPath = public_path().'/images/';
         $filename        = str_random(6) . '_' . $file->getClientOriginalName();
         $file->move($destinationPath, $filename);
+        */
         /*
         $post->image = '/images/'. $filename;
         $post->save();
