@@ -34,6 +34,8 @@ Route::get('/v1/get/children_of_parent/{parent_id}', 'HomeController@get_childre
 
 Route::get('/v1/get/user_info/{user_id}', 'HomeController@get_user_info');
 
+Route::get('/v1/get/user_detail/{email}', 'HomeController@get_user_detail');
+
 Route::get('/v1/get/class_info/{class_id}', 'HomeController@get_class_info');
 
 Route::get('/v1/get/child_info/{child_id}', 'HomeController@get_child_info');

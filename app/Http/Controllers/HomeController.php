@@ -20,7 +20,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware('auth.basic');
+        $this->middleware('auth.basic');
     }
 
     /**
@@ -395,5 +395,20 @@ class HomeController extends Controller
         }
     }
 
-}
+    /**
+     * get all information about a particular user
+     * @param email
+     * @return json
+     */
 
+    public function get_user_detail($email) {
+        $user = \App\User::where('email', '=', $email)->first();
+        if(!is_null($user)){
+            return $user->toJson();
+        }else{
+            echo "[]";
+        }
+    }
+
+
+}
