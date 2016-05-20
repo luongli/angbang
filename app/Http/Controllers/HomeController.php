@@ -43,14 +43,16 @@ class HomeController extends Controller
     public function get_avatar($user_id)
     {
         // the path should be changed depending on the OS
-        $path = 'C:/Users/li/Documents/workspace/angbang/storage/avatar/' . $user_id . '/a.jpg';
-        // check if the file exists
+        $path = storage_path() .'/avatar/' . $user_id . '/a.jpg';
+        
+        // check if the file exists        
         if(File::exists($path)) {
             $image = Image::make($path)->resize(300, 300);
             return $image->response('jpg');
         }
         
         return 'Requested file does not exist';
+        
     }
 
     /**
@@ -62,7 +64,7 @@ class HomeController extends Controller
     public function get_child_picture($child_id)
     {
         // the image will be store at storage/child_avatar/{child_id}.jpg
-        $path = 'C:/Users/li/Documents/workspace/angbang/storage/child_avatar/' . $child_id . '.jpg';
+        $path = storage_path() . '/child_avatar/' . $child_id . '.jpg';
 
         if(File::exists($path)) {
             $image = Image::make($path);
@@ -89,7 +91,7 @@ class HomeController extends Controller
         //$file = Input::file('image');
         $encoded_image = $_POST['image'];
         $file = base64_decode($encoded_image);
-        file_put_contents('C:\Users\li\Documents\workspace\angbang\public\images\abc.jpg', $file);
+        file_put_contents(public_path() . '\images\abc.jpg', $file);
         $name = Input::get('name');
         
         echo $name;
