@@ -8,5 +8,5 @@ class Picture extends Model
 {
     protected $table = 'picture';
 
-    protected $fillable = [ 'url' ];
+    protected $fillable = [ 'url', 'id_class', 'id_post'];
 }

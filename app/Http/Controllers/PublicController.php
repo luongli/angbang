@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Input;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Hash;
+use Illuminate\Support\Facades\Response;
 use View;
 
 class PublicController extends Controller {
@@ -43,7 +44,8 @@ class PublicController extends Controller {
 	 * This route is used to test connection
 	 * return a string
 	 */
-	public function test(){
-		echo "OK. Connected to server successfully";
+	public function test($param1, $param2){
+		echo $param1;
+		echo $param2;
 	}
 }

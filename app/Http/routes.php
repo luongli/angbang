@@ -26,9 +26,17 @@ Route::get('/v1/get/user_detail/{email}', 'UserController@get_user_detail');
 
 Route::get('/v1/get/classes_of_teacher/{teacher_id}', 'UserController@get_classes_of_teacher');
 
+Route::get('/v1/get/classes_of_parent/{parent_id}', 'UserController@get_classes_of_parent');
+
+Route::get('/v1/get/classes_of_user/{user_id}', 'UserController@get_classes_of_user');
+
 Route::get('/v1/get/children_of_parent/{parent_id}', 'UserController@get_children_of_parent');
 
 Route::get('/v1/get/relevant_people/{user_id}', 'UserController@get_relevant_people');
+
+Route::get('/v1/get/teachers_of_class/{class_id}', 'UserController@get_teachers_of_class');
+
+Route::post('/v1/create/post', 'UserController@create_post');
 
 
 // Class controller
@@ -40,8 +48,6 @@ Route::get('/v1/get/class_info/{class_id}', 'ClassController@get_class_info');
 
 // Home controller
 Route::get('/home', 'HomeController@index');
-
-Route::get('/v1/get/teachers_of_class/{class_id}', 'UserController@get_teachers_of_class');
 
 Route::get('/v1/get/child_picture/{child_id}', 'HomeController@get_child_picture');
 
@@ -59,7 +65,7 @@ Route::get('/register', 'PublicController@get_register');
 
 Route::post('/register', 'PublicController@register');
 
-Route::get('/test', 'PublicController@test');
+Route::get('/test/{param1}&{param2}', 'PublicController@test');
 
 Route::get('/upload', function() {
 	return view('upload');

@@ -94,11 +94,53 @@ class UserController extends Controller
                 );
                 array_push($res, $tmp);
             }
-            return Response::json($res);
+            return $res;
         }else{
             echo 'not a teacher';
         }
     }
+
+
+    /**
+     * return a list of classes that the children of a parent is studying in
+     * @param id of parent
+     * @return json array of class id and class name
+     */
+    public function get_classes_of_parent($parent)
+    {
+        $parent = \App\User::find($parent);
+        $res = array();
+        if(is_null($parent) || $parent['type'] == 2) {
+            echo '[]';
+        } else {
+            $children = $parent->children;
+            foreach($children as $child) {
+                $class = $child->get_class;
+                $tmp = array(
+                    'id'=>$class['id'], 
+                    'class_name'=>$class['class_name']
+                );
+                array_push($res, $tmp);
+            }
+
+            return $res;
+        }
+    }
+
+
+    public function get_classes_of_user($user_id)
+    {
+        $user = \App\User::find($user_id);
+        $res = null;
+        if($user['type'] == 1) {
+            $res = $this->get_classes_of_parent($user_id);
+        } else {
+            $res = $this->get_classes_of_teacher($user_id);
+        }
+        $kq = array('classes'=>$res);
+        return Response::json($kq);
+    }
+
 
     /**
      * get_children_of_parent returns a list of children of a given parent
@@ -255,6 +297,56 @@ class UserController extends Controller
             // if user not found, reponse an empty json
             return Response::json(array());
         }
+    }
+
+
+    /**
+     * Receive request to make post from user
+     * Parameters the request are status, class_id, image
+     * 
+     * @param user_id, type. Type = 1 if it has picture, type = 2 if it doesn't
+     */
+    public function create_post()
+    {
+        $status = Input::get('status');
+        $user_id = Input::get('user_id');
+        $type = Input::get('type');
+        // add post to database
+        $post = \App\Post::create(['status'=>$status, 'id_user'=>$user_id]);
+
+        if($type == 2) {
+            $class_id = Input::get('class_id');
+            $encoded_image = $_POST['image'];
+            $path_to_image = storage_path() . '\\class_album\\' . $class_id;
+
+            if (!file_exists($path_to_image)) {
+                mkdir($path_to_image, 0777, true);
+            }
+
+            $file_name = '\\' . str_random(20) . '.jpg';
+            $file = base64_decode($encoded_image);
+            file_put_contents($path_to_image . $file_name, $file);  
+            // add picture to database
+            $picture = \App\Picture::create(['url'=>$path_to_image,
+                'id_class'=>$class_id,
+                'id_post'=>$post['id']
+            ]);
+
+            $user = \App\User::find($user_id);
+            $class = \App\Classes::find($class_id);
+            $description = $user['fname'] . ' ' . $user['lname'] . ' has uploaded a picture into class ' . $class['class_name'];
+
+            // add change of post to notification table
+            $noti = \App\Notification::create([
+                'type'=>5,
+                'description' => $description,
+                'id_action'=>$post['id'],
+                'sender'=>$user_id,
+                'class_id'=>$class_id
+            ]);
+        }
+
+        return Response::json($post);
     }
 
 }
