@@ -7,7 +7,13 @@ class CreateNotificationTable extends Migration
 {
     /**
      * Run the migrations.
-     *
+     * type = 1 if Act table is changed
+     * type = 2 if ActComment is changed
+     * type = 3 if Children  is changed
+     * type = 4 if Picture table is changed
+     * type = 5 if PostComment table is changed
+     * type = 6 if MenuTable is changed
+     * type = 7 if Message table is changed
      * @return void
      */
     public function up()
@@ -26,8 +32,8 @@ class CreateNotificationTable extends Migration
             $table->integer('sender')->unsigned();
             $table->foreign('sender')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             // receiver foreign key
-            $table->integer('receiver')->unsigned();
-            $table->foreign('receiver')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('class_id')->unsigned();
+            $table->foreign('class_id')->references('id')->on('class')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
