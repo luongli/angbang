@@ -16,31 +16,35 @@ Route::get('/', function () {
 
 Route::auth();
 
+// UserController
+
+Route::get('/v1/getavatar/{user_id}', 'UserController@get_avatar');
+
+Route::get('/v1/get/user_info/{user_id}', 'UserController@get_user_info');
+
+Route::get('/v1/get/user_detail/{email}', 'UserController@get_user_detail');
+
+Route::get('/v1/get/classes_of_teacher/{teacher_id}', 'UserController@get_classes_of_teacher');
+
+Route::get('/v1/get/children_of_parent/{parent_id}', 'UserController@get_children_of_parent');
+
+Route::get('/v1/get/relevant_people/{user_id}', 'UserController@get_relevant_people');
+
+
+// Home controller
 Route::get('/home', 'HomeController@index');
 
-Route::get('/v1/getavatar/{user_id}', 'HomeController@get_avatar');
+Route::get('/v1/get/teachers_of_class/{class_id}', 'UserController@get_teachers_of_class');
 
 Route::get('/v1/get/child_picture/{child_id}', 'HomeController@get_child_picture');
 
 Route::get('/v1/get/class_list/{class_id}', 'HomeController@get_class_list');
 
-Route::get('/v1/get/classes_of_teacher/{teacher_id}', 'HomeController@get_classes_of_teacher');
-
-Route::get('/v1/get/teachers_of_class/{class_id}', 'HomeController@get_teachers_of_class');
-
 Route::get('/v1/get/parents_of_child/{child_id}', 'HomeController@get_parents_of_child');
-
-Route::get('/v1/get/children_of_parent/{parent_id}', 'HomeController@get_children_of_parent');
-
-Route::get('/v1/get/user_info/{user_id}', 'HomeController@get_user_info');
-
-Route::get('/v1/get/user_detail/{email}', 'HomeController@get_user_detail');
 
 Route::get('/v1/get/class_info/{class_id}', 'HomeController@get_class_info');
 
 Route::get('/v1/get/child_info/{child_id}', 'HomeController@get_child_info');
-
-Route::get('/v1/get/relevant_people/{user_id}', 'HomeController@get_relevant_people');
 
 Route::get('/v1/login', 'HomeController@login');
 
