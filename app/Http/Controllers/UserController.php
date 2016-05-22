@@ -232,7 +232,7 @@ class UserController extends Controller
                 }
             }
             //remove duplicated element
-            $users = array_unique($users);
+            // $users = array_unique($users);
         }
         return $users;
     }
@@ -270,7 +270,7 @@ class UserController extends Controller
             }
         }
 
-        $users = array_unique($users);
+        // $users = array_unique($users);
         return $users;
     }
 
@@ -317,17 +317,17 @@ class UserController extends Controller
         if($type == 2) {
             $class_id = Input::get('class_id');
             $encoded_image = $_POST['image'];
-            $path_to_image = storage_path() . '\\class_album\\' . $class_id;
+            $path_to_image = storage_path() . '\\class_album\\' . $class_id . '\\';
 
             if (!file_exists($path_to_image)) {
                 mkdir($path_to_image, 0777, true);
             }
 
-            $file_name = '\\' . str_random(20) . '.jpg';
+            $file_name = str_random(20) . '.jpg';
             $file = base64_decode($encoded_image);
             file_put_contents($path_to_image . $file_name, $file);  
             // add picture to database
-            $picture = \App\Picture::create(['url'=>$path_to_image,
+            $picture = \App\Picture::create(['url'=>$file_name,
                 'id_class'=>$class_id,
                 'id_post'=>$post['id']
             ]);
@@ -348,5 +348,7 @@ class UserController extends Controller
 
         return Response::json($post);
     }
+
+    
 
 }

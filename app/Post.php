@@ -16,4 +16,8 @@ class Post extends Model
     protected $fillable = [
         'status', 'id_user'
     ];
+
+    protected $hidden = [
+        'created_at', 'updated_at'
+    ];
 }

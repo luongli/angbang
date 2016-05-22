@@ -44,6 +44,12 @@ Route::get('/v1/get/class_list/{class_id}', 'ClassController@get_class_list');
 
 Route::get('/v1/get/class_info/{class_id}', 'ClassController@get_class_info');
 
+Route::get('/v1/get/parents_of_class/{class_id}', 'ClassController@get_parents_of_class');
+
+Route::get('/v1/get/picture_of_class/{class_id}/{file_name}', 'ClassController@get_picture_of_class');
+
+Route::get('/v1/get/album/{class_id}', 'ClassController@get_album');
+
 
 
 // Home controller
@@ -56,6 +62,8 @@ Route::get('/v1/get/parents_of_child/{child_id}', 'HomeController@get_parents_of
 Route::get('/v1/get/child_info/{child_id}', 'HomeController@get_child_info');
 
 Route::get('/v1/login', 'HomeController@login');
+
+Route::get('/v1/new_feeds/{user_id}/{date}', 'HomeController@get_new_feeds');
 
 Route::post('images/store','HomeController@storeImage');
 

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Database\DatabaseManager;
 use File;
+use DB;
 use Log;
 
 class HomeController extends Controller
@@ -139,4 +140,105 @@ class HomeController extends Controller
     public function login(){
         echo 1;
     }
+
+
+    /**
+     * This function return a list of teachers who is working on a given class
+     * @param id of a class
+     * @return an array of teacher id
+     */
+    public function get_teachers_of_class($class_id)
+    {
+        $teachers = \App\Classes::find($class_id)->teachers;
+        $res = array();
+        if(!is_null($teachers)){
+            foreach($teachers as $teacher){
+                array_push($res, $teacher['id']);
+            }
+        }
+        return $res;
+    }
+
+    /**
+     * get parents of a given class
+     * @param class_id
+     * @return an array of parents ids
+     */
+    public function get_parents_of_class($class_id)
+    {
+        $class = \App\Classes::find($class_id);
+        $res = array();
+        if(!is_null($class)){
+            $children = $class->children;
+            foreach($children as $child){
+                $parents = $child->parents;
+                foreach($parents as $parent) {
+                    array_push($res, $parent['id']);
+                }
+            }
+        }
+
+        return $res;
+    }
+
+    public function get_classes_of_user($user)
+    {
+        $res = array();
+        if($user['type'] == 2){
+            $classes = $user->classes;
+            foreach ($classes as $class) {
+                array_push($res, $class['id']);
+            }
+        } else {
+            $children = $user->children;
+            foreach ($children as $child) {
+                array_push($res, $child['id_class']);
+            }
+        }
+
+        return $res;
+    }
+
+
+    /**
+     * get new feeds. All posts in the same class are visible to users in that classes
+     * @param user_id
+     * @return json array
+     */
+    public function get_new_feeds($user_id, $date)
+    {
+        $user = \App\User::find($user_id);
+        //echo $user;
+        $ids = array();
+        if(!is_null($user)) {
+            // get all classes of a user: parent or teacher
+            $classes = $this->get_classes_of_user($user);
+            //echo Response::json($classes);
+            foreach ($classes as $class_id) {
+                // get ids of teachers in a class
+                $tmp = $this->get_teachers_of_class($class_id);
+                //echo Response::json($tmp);
+                $ids = array_merge($ids, $tmp);
+                // get ids of parents in a class
+                $tmp = $this->get_parents_of_class($class_id);
+                $ids = array_merge($ids, $tmp);
+            }
+            //echo Response::json($ids);
+            // query db to get post
+            $res = DB::table('post')
+                        ->select('post.id', 'status', 'id_user', 'picture.url', 'picture.id_class')
+                        ->leftJoin('picture', 'post.id', '=', 'picture.id_post')
+                        ->where('post.created_at', '>=', $date)
+                        ->whereIn('id_user', $ids)
+                        ->orWhere('id_class', null)
+                        ->whereIn('id_class', $classes)
+                        ->orderBy('post.created_at', 'desc')->get();
+
+        }
+
+        $kq = array("posts" =>$res);
+
+        return Response::json($kq);
+    }
+    
 }

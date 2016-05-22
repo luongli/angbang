@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Database\DatabaseManager;
 use File;
+use DB;
 use App\Http\Requests;
 
 class ClassController extends Controller
@@ -58,5 +59,65 @@ class ClassController extends Controller
         }else{
             echo "null";
         }
+    }
+
+    /**
+     * get parents of a given class
+     * @param class_id
+     * @return a json object {parents: []}
+     */
+    public function get_parents_of_class($class_id)
+    {
+        $class = \App\Classes::find($class_id);
+        $res = array();
+        if(!is_null($class)){
+            $children = $class->children;
+            foreach($children as $child){
+                $parents = $child->parents;
+                foreach($parents as $parent) {
+                    array_push($res, $parent['id']);
+                }
+            }
+        }
+
+        $kq = array('parents'=>$res);
+
+        return Response::json($kq);
+    }
+
+    /**
+     * return a picture of a class album
+     * @param file_name
+     * @return picture
+     */
+    public function get_picture_of_class($class_id, $file_name)
+    {
+        // the path should be changed depending on the OS
+        $path = storage_path() . '\\class_album\\' . $class_id . '\\'. $file_name;
+
+        //echo $path;
+        
+        // check if the file exists        
+        if(File::exists($path)) {
+            $image = Image::make($path)->resize(300, 300);
+            return $image->response('jpg');
+        }
+        
+        return 'Requested file does not exist';
+    }
+
+    /**
+     * return the name of all images of a class
+     * @param class_id
+     * @return json: {"pictures":[]}
+     */
+    public function get_album($class_id)
+    {
+        $res = DB::table('picture')
+                    ->select('id', 'url')
+                    ->where('id_class', '=', $class_id)
+                    ->get();
+        $kq = array('pictures'=>$res);
+        return Response::json($kq);
     }
 }
