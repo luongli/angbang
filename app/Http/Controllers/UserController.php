@@ -32,7 +32,10 @@ class UserController extends Controller
     public function get_avatar($user_id)
     {
         // the path should be changed depending on the OS
-        $path = storage_path() .'/avatar/' . $user_id . '.jpg';
+        $user = \App\User::find($user_id);
+        if($user['avatar'] == null)
+            return 'null';
+        $path = storage_path() .'/avatar/' . $user['avatar'];
         
         // check if the file exists        
         if(File::exists($path)) {
