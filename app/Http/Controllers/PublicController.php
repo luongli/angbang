@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Hash;
 use Illuminate\Support\Facades\Response;
 use View;
+use DB;
 
 class PublicController extends Controller {
 	/**
@@ -47,5 +48,64 @@ class PublicController extends Controller {
 	public function test($param1, $param2){
 		echo $param1;
 		echo $param2;
+	}
+
+
+	/**
+	 * receive post from client
+	 * @return a message about the creating new user
+	 */
+	public function regiser_for_app()
+	{
+		$fname = Input::get('fname');
+		$lname = Input::get('lname');
+		$email = Input::get('email');
+
+		//check if email exists
+		$query = DB::table('users')
+						->where('email', '=', $email)->get();
+		if(count($query) != 0) {
+			return "Entered email already exists";
+		}
+
+		$birthday = Input::get('birthday');
+		$sex = Input::get('sex');
+
+		if($sex == 0) {
+			$sex = false;
+		} else {
+			$sex = true;
+		}
+
+		$address = Input::get('address');
+		$phone = Input::get('phone');
+		$password = Input::get('password');
+		$avatar = $_POST['avatar'];
+
+		if($avatar != 'null') {
+			$file = base64_decode($avatar);
+			$file_name = str_random(30) . '.jpg';
+			$path = storage_path() . '/avatar/';
+			file_put_contents($path . $file_name, $file);
+			$avatar = $file_name;
+		} else {
+			$avatar = null;
+		}
+
+
+		$user = \App\User::create([
+			'fname' => $fname,
+			'lname' => $lname,
+			'email' => $email,
+			'birthday' => $birthday,
+			'sex' => $sex,
+			'address' => $address,
+			'phone' => $phone,
+			'type' => 1,
+			'password' => Hash::make($password),
+			'avatar' => $avatar
+		]);
+
+		return "Account is created successfully";
 	}
 }

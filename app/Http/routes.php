@@ -75,6 +75,8 @@ Route::post('/register', 'PublicController@register');
 
 Route::get('/test/{param1}&{param2}', 'PublicController@test');
 
+Route::post('/v1/register', 'PublicController@regiser_for_app');
+
 Route::get('/upload', function() {
 	return view('upload');
 });
