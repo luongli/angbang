@@ -240,5 +240,16 @@ class HomeController extends Controller
 
         return Response::json($kq);
     }
+
+    public function get_child_by_token($token) {
+        $child = DB::table('children')
+                        ->select('id', 'fname', 'lname')
+                        ->where('secret_token', '=', $token)
+                        ->get();
+        if(count($child) == 0) {
+            return "{}";
+        }
+        return Response::json($child[0]);
+    }
     
 }
