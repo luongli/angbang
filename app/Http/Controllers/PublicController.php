@@ -9,6 +9,8 @@ use Hash;
 use Illuminate\Support\Facades\Response;
 use View;
 use DB;
+use Intervention\Image\Facades\Image;
+use File;
 
 class PublicController extends Controller {
 	
