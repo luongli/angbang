@@ -229,8 +229,9 @@ class HomeController extends Controller
             $res = array();
             // query db to get post
             DB::table('post')
-                        ->select('post.id', 'status', 'id_user', 'picture.url', 'picture.id_class')
+                        ->select('post.id', 'status', 'picture.url', 'picture.id_class', 'picture.created_at', 'id_user', 'fname', 'lname', 'avatar')
                         ->leftJoin('picture', 'post.id', '=', 'picture.id_post')
+                        ->join('users', 'post.id_user', '=', 'users.id')
                         ->whereIn('id_user', $ids)
                         ->orWhere('id_class', null)
                         ->whereIn('id_class', $classes)
