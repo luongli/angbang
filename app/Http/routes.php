@@ -38,6 +38,8 @@ Route::get('/v1/get/teachers_of_class/{class_id}', 'UserController@get_teachers_
 
 Route::post('/v1/create/post', 'UserController@create_post');
 
+Route::get('/v1/add_child/{user_id}/{child_id}', 'UserController@add_child');
+
 
 // Class controller
 Route::get('/v1/get/class_list/{class_id}', 'ClassController@get_class_list');
@@ -66,6 +68,8 @@ Route::get('/v1/login', 'HomeController@login');
 Route::get('/v1/new_feeds/{user_id}/{date}', 'HomeController@get_new_feeds');
 
 Route::post('images/store','HomeController@storeImage');
+
+Route::get('/v1/get/child_by_token/{token}', 'HomeController@get_child_by_token');
 
 
 // Public Controller
