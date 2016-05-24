@@ -23,30 +23,6 @@ class UserController extends Controller
         $this->middleware('auth.basic');
     }
 
-    /**
-     * Get avatar of a specific user.
-     * Avatar images will be stored on storage/avatar/{user_id} folder
-     * 
-     * @param user_id
-     * @return image
-     */
-    public function get_avatar($user_id)
-    {
-        // the path should be changed depending on the OS
-        $user = \App\User::find($user_id);
-        if($user['avatar'] == null)
-            return 'null';
-        $path = storage_path() .'/avatar/' . $user['avatar'];
-        
-        // check if the file exists        
-        if(File::exists($path)) {
-            $image = Image::make($path)->resize(300, 300);
-            return $image->response('jpg');
-        }
-        
-        return 'Requested file does not exist';
-        
-    }
 
     /**
      * get_user_info function is used to get details of a specific user

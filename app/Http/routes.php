@@ -18,8 +18,6 @@ Route::auth();
 
 // UserController
 
-Route::get('/v1/getavatar/{user_id}', 'UserController@get_avatar');
-
 Route::get('/v1/get/user_info/{user_id}', 'UserController@get_user_info');
 
 Route::get('/v1/get/user_detail/{email}', 'UserController@get_user_detail');
@@ -48,8 +46,6 @@ Route::get('/v1/get/class_info/{class_id}', 'ClassController@get_class_info');
 
 Route::get('/v1/get/parents_of_class/{class_id}', 'ClassController@get_parents_of_class');
 
-Route::get('/v1/get/picture_of_class/{class_id}/{file_name}', 'ClassController@get_picture_of_class');
-
 Route::get('/v1/get/album/{class_id}', 'ClassController@get_album');
 
 
@@ -65,7 +61,7 @@ Route::get('/v1/get/child_info/{child_id}', 'HomeController@get_child_info');
 
 Route::get('/v1/login', 'HomeController@login');
 
-Route::get('/v1/new_feeds/{user_id}/{date}', 'HomeController@get_new_feeds');
+Route::get('/v1/new_feeds/{user_id}/{start}/{end}', 'HomeController@get_new_feeds');
 
 Route::post('images/store','HomeController@storeImage');
 
@@ -80,6 +76,10 @@ Route::post('/register', 'PublicController@register');
 Route::get('/test/{param1}&{param2}', 'PublicController@test');
 
 Route::post('/v1/register', 'PublicController@regiser_for_app');
+
+Route::get('/v1/getavatar/{user_id}', 'PublicController@get_avatar');
+
+Route::get('/v1/get/picture_of_class/{class_id}/{file_name}', 'PublicController@get_picture_of_class');
 
 Route::get('/upload', function() {
 	return view('upload');

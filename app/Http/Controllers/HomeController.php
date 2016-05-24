@@ -200,14 +200,16 @@ class HomeController extends Controller
     }
 
 
+
     /**
      * get new feeds. All posts in the same class are visible to users in that classes
      * @param user_id
      * @return json array
      */
-    public function get_new_feeds($user_id, $date)
+    public function get_new_feeds($user_id, $start, $end)
     {
         $user = \App\User::find($user_id);
+        $count = 0;
         //echo $user;
         $ids = array();
         if(!is_null($user)) {
@@ -224,15 +226,29 @@ class HomeController extends Controller
                 $ids = array_merge($ids, $tmp);
             }
             //echo Response::json($ids);
+            $res = array();
             // query db to get post
-            $res = DB::table('post')
+            DB::table('post')
                         ->select('post.id', 'status', 'id_user', 'picture.url', 'picture.id_class')
                         ->leftJoin('picture', 'post.id', '=', 'picture.id_post')
-                        ->where('post.created_at', '>=', $date)
                         ->whereIn('id_user', $ids)
                         ->orWhere('id_class', null)
                         ->whereIn('id_class', $classes)
-                        ->orderBy('post.created_at', 'desc')->get();
+                        ->orderBy('post.created_at', 'desc')->chunk(5, function($posts) use (&$count, &$end, &$start, &$res) {
+                            foreach ($posts as $post) {
+                                if($count < $start){
+                                    $count += 1;
+                                    continue;
+                                } else {
+                                    if($count <= $end){
+                                        array_push($res, $post);
+                                        $count++;
+                                    }else {
+                                        return false;
+                                    }
+                                }
+                            }
+                        });
 
         }
 

@@ -86,27 +86,6 @@ class ClassController extends Controller
     }
 
     /**
-     * return a picture of a class album
-     * @param file_name
-     * @return picture
-     */
-    public function get_picture_of_class($class_id, $file_name)
-    {
-        // the path should be changed depending on the OS
-        $path = storage_path() . '\\class_album\\' . $class_id . '\\'. $file_name;
-
-        //echo $path;
-        
-        // check if the file exists        
-        if(File::exists($path)) {
-            $image = Image::make($path)->resize(300, 300);
-            return $image->response('jpg');
-        }
-        
-        return 'Requested file does not exist';
-    }
-
-    /**
      * return the name of all images of a class
      * @param class_id
      * @return json: {"pictures":[]}
