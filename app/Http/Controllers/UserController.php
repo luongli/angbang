@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Database\DatabaseManager;
 use File;
+use DB;
 use App\Http\Requests;
 
 class UserController extends Controller
@@ -352,6 +353,23 @@ class UserController extends Controller
         return Response::json($post);
     }
 
-    
+
+    /**
+     * add new child to a parent
+     * @param $user_id, $child_id
+     * @return a message to indicate success or fail
+     */
+    public function add_child($user_id, $child_id)
+    {
+        try {
+            DB::table('children_parents')->insert(
+                ['id_parent' => $user_id, 'id_child' => $child_id]
+            );
+
+            return "Successfully";
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
 
 }
