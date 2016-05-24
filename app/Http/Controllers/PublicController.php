@@ -106,6 +106,6 @@ class PublicController extends Controller {
 			'avatar' => $avatar
 		]);
 
-		return "Account is created successfully";
+		return "Account is created successfully" . ':' . $user['id'];
 	}
 }
