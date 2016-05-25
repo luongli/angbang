@@ -9,5 +9,5 @@ class PostComment extends Model
     //
     protected $table = 'post_comment';
 
-    protected $fillable = [ 'content' ];
+    protected $fillable = [ 'content' , 'id_post', 'id_user'];
 }

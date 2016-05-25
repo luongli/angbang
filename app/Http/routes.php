@@ -63,6 +63,10 @@ Route::get('/v1/login', 'HomeController@login');
 
 Route::get('/v1/new_feeds/{user_id}/{start}/{end}', 'HomeController@get_new_feeds');
 
+Route::post('v1/comment_post', 'HomeController@comment_post');
+
+Route::get('v1/get/post/{post_id}', 'HomeController@get_post');
+
 Route::post('images/store','HomeController@storeImage');
 
 Route::get('/v1/get/child_by_token/{token}', 'HomeController@get_child_by_token');

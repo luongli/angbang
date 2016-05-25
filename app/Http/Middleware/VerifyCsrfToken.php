@@ -14,6 +14,7 @@ class VerifyCsrfToken extends BaseVerifier
     protected $except = [
         'images/store',
         '/v1/create/post',
-        '/v1/register'
+        '/v1/register',
+        'v1/comment_post'
     ];
 }

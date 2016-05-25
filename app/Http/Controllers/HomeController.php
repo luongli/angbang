@@ -268,5 +268,62 @@ class HomeController extends Controller
         }
         return Response::json($child[0]);
     }
+
+    public function comment_post()
+    {
+
+        $comment = \App\PostComment::create([
+            'content'=>Input::get('content'), 
+            'id_post'=>Input::get('id_post'),
+            'id_user'=>Input::get('id_user')
+            ]);
+
+        return "Successfully";
+    }
+
+    public function get_post($post_id)
+    {
+        $res = array();
+        $post = \App\Post::find($post_id);
+        $user = \App\User::find($post['id_user']);
+        $picture = $post->picture;
+
+        if(count($picture) == 0) {
+            $res['post'] = array(
+                'id'=>$post['id'],
+                'status'=>$post['status'],
+                'created_at' => $post['created_at'],
+                'fname' => $user['fname'],
+                'lname' => $user['lname'],
+                'picture' => 'null'
+                );
+        } else {
+            $picture = array('id'=>$picture[0]['id'], 'url'=>$picture[0]['url'], 'id_class'=>$picture[0]['id_class']);
+            $res['post'] = array(
+                'id'=>$post['id'],
+                'status'=>$post['status'],
+                'created_at' => $post['created_at'],
+                'fname' => $user['fname'],
+                'lname' => $user['lname'],
+                'picture' => $picture
+                );
+        }
+        
+
+        $comments = $post->comments;
+        $comment_a = array();
+        foreach ($comments as $comment) {
+            $tmp = array();
+            $tmp['content'] = $comment['content'];
+            $comment_user = \App\User::find($comment['id_user']);
+            $tmp['fname'] = $comment_user['fname'];
+            $tmp['lname'] = $comment_user['lname'];
+            array_push($comment_a, $tmp);
+        }
+
+        $res['comments']=$comment_a;
+
+        return Response::json($res);
+    }
     
 }

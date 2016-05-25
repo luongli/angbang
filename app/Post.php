@@ -20,4 +20,12 @@ class Post extends Model
     protected $hidden = [
         'updated_at'
     ];
+
+    public function comments() {
+        return $this->hasMany('App\PostComment', 'id_post');
+    }
+
+    public function picture() {
+        return $this->hasMany('App\Picture', 'id_post');
+    }
 }
